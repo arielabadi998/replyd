@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Replyd — Every review. Answered.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                "primary": "#00FF95",
+                "on-primary": "#050505",
+                "background": "#050505",
+                "surface": "#0A0A0A",
+            },
+            fontFamily: {
+                "headline": ["Syne", "sans-serif"],
+                "body": ["DM Sans", "sans-serif"],
+            },
+        },
+    },
+}
+</script>
+<style>
+* { box-sizing: border-box; }
+body { background-color: #050505; color: #ffffff; }
+.glass-nav { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+.kerning-tight { letter-spacing: -0.04em; }
+.border-emerald-thin { border: 1px solid rgba(0, 255, 149, 0.15); }
+.reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+.ui-card { background: #121212; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; overflow: hidden; }
+.ui-header { background: #1A1A1A; padding: 10px 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot.green { background: #00FF95; }
+
+/* Radar */
+@keyframes radar-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes blip-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+.radar-sweep { animation: radar-rotate 3s linear infinite; transform-origin: 50% 50%; }
+.blip { animation: blip-pulse 1.5s ease-in-out infinite; }
+.blip2 { animation: blip-pulse 1.5s ease-in-out infinite 0.5s; }
+
+/* Typing */
+@keyframes typing { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+.typing-dot { animation: typing 1.4s infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Success pulse */
+@keyframes success-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,255,149,0.5); }
+  50% { box-shadow: 0 0 0 10px rgba(0,255,149,0); }
+}
+.success-ring { animation: success-pulse 2s infinite; }
+</style>
+</head>
+<body class="font-body selection:bg-primary selection:text-on-primary overflow-x-hidden">
+
+<!-- NAV -->
+<nav class="fixed top-0 w-full border-b border-white/5 bg-background/80 glass-nav z-50">
+  <div class="flex justify-between items-center max-w-7xl mx-auto px-6 py-5">
+    <div class="text-2xl font-bold tracking-tighter text-white font-headline">Replyd<span class="text-primary">.</span></div>
+    <div class="hidden md:flex items-center space-x-10">
+      <a class="text-sm font-medium hover:text-primary transition-colors" href="#how-it-works">How it Works</a>
+      <a class="text-sm font-medium hover:text-primary transition-colors" href="#pricing">Pricing</a>
+      <a class="text-sm font-medium hover:text-primary transition-colors" href="#contact">Contact</a>
+    </div>
+    <a href="mailto:replyd.net@gmail.com" class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-bold text-xs uppercase tracking-widest hover:brightness-110 transition-all">Get in Touch</a>
+  </div>
+</nav>
+
+<main>
+<!-- HERO: two column, mockup on right, controlled width -->
+<section class="min-h-screen flex items-center px-6 pt-24 pb-12">
+  <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+    <!-- Left: headline -->
+    <div class="reveal">
+      <h1 class="font-headline text-[12vw] lg:text-[6.5vw] leading-[0.9] font-extrabold kerning-tight mb-8">
+        Every<br/>review.<br/>
+        <span class="text-primary italic">Answered.</span>
+      </h1>
+      <p class="text-white/60 text-lg font-light leading-relaxed max-w-md mb-10">
+        We monitor your Google reviews around the clock and respond to every single one — professionally, personally, powered by AI.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a href="mailto:replyd.net@gmail.com" class="bg-primary text-on-primary px-7 py-3.5 rounded-full font-bold text-sm uppercase tracking-widest hover:brightness-110 transition-all">Start Free Trial</a>
+        <a href="#how-it-works" class="border border-white/15 hover:border-primary/50 px-7 py-3.5 rounded-full font-bold text-sm uppercase tracking-widest transition-colors">See How It Works</a>
+      </div>
+    </div>
+
+    <!-- Right: compact mockup -->
+    <div class="reveal space-y-2 max-w-sm mx-auto lg:mx-0 lg:ml-auto">
+      <!-- Review card -->
+      <div class="ui-card">
+        <div class="ui-header">
+          <div class="dot" style="background:#FF5F57"></div>
+          <div class="dot" style="background:#FEBC2E"></div>
+          <div class="dot green"></div>
+          <span class="text-[9px] text-white/30 ml-1 uppercase tracking-widest font-bold">New Review — Google Business</span>
+        </div>
+        <div class="p-4">
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center font-bold text-xs flex-shrink-0">M</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-bold text-sm">Michael Cohen</span>
+                <span class="text-[10px] text-white/40 flex-shrink-0 ml-2">2 min ago</span>
+              </div>
+              <div class="text-yellow-400 text-xs mb-1">★★★★★</div>
+              <p class="text-xs text-white/65 leading-relaxed italic">"Best dental experience I've ever had. The staff was incredibly kind and professional!"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI typing indicator -->
+      <div class="flex items-center gap-2 px-1">
+        <div class="h-px flex-1 bg-white/8"></div>
+        <div class="flex items-center gap-1.5 bg-primary/10 border border-primary/20 rounded-full px-3 py-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary typing-dot"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-primary typing-dot"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-primary typing-dot"></span>
+          <span class="text-[9px] text-primary font-bold uppercase tracking-widest ml-1">AI writing response</span>
+        </div>
+        <div class="h-px flex-1 bg-white/8"></div>
+      </div>
+
+      <!-- Response ready -->
+      <div class="ui-card" style="border-color: rgba(0,255,149,0.2)">
+        <div class="ui-header" style="background: rgba(0,255,149,0.04)">
+          <div class="dot green"></div>
+          <span class="text-[9px] text-primary ml-1 uppercase tracking-widest font-bold">Replyd AI — Response Ready</span>
+          <span class="ml-auto text-[9px] text-white/30">Just now</span>
+        </div>
+        <div class="p-4">
+          <p class="text-xs text-white/75 leading-relaxed italic mb-4">"Thank you so much, Michael! We're thrilled to hear you had such a wonderful experience. Your kind words truly mean the world to us — see you next time!"</p>
+          <div class="flex gap-2">
+            <button class="flex-1 py-2 bg-primary text-on-primary rounded-lg font-bold text-xs uppercase tracking-widest">✓ Approve & Post</button>
+            <button class="px-4 py-2 border border-white/10 rounded-lg font-bold text-xs uppercase tracking-widest hover:border-white/30 transition-colors">Edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="py-28 px-6 border-t border-emerald-thin bg-surface" id="how-it-works">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-16 reveal">
+      <span class="text-primary font-bold text-xs uppercase tracking-[0.3em] mb-4 block">Process</span>
+      <h2 class="font-headline text-5xl md:text-6xl font-bold kerning-tight">How it works.</h2>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+      <!-- Step 1: Radar -->
+      <div class="reveal">
+        <div class="ui-card mb-6 border-emerald-thin">
+          <div class="ui-header"><div class="dot green"></div><span class="text-[9px] text-white/30 font-bold uppercase">Step 01 / Monitor</span></div>
+          <div class="p-8 h-44 flex items-center justify-center">
+            <div class="relative" style="width:120px;height:120px;">
+              <!-- Static rings -->
+              <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;">
+                <circle cx="60" cy="60" r="55" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                <circle cx="60" cy="60" r="38" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                <circle cx="60" cy="60" r="20" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                <line x1="5" y1="60" x2="115" y2="60" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                <line x1="60" y1="5" x2="60" y2="115" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+              </svg>
+              <!-- Sweep -->
+              <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;" class="radar-sweep">
+                <line x1="60" y1="60" x2="60" y2="5" stroke="#00FF95" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M60 60 L60 5 A55 55 0 0 0 5 60 Z" fill="rgba(0,255,149,0.06)"/>
+              </svg>
+              <!-- Blips -->
+              <div class="blip" style="position:absolute;top:22px;right:28px;width:5px;height:5px;border-radius:50%;background:#00FF95;"></div>
+              <div class="blip2" style="position:absolute;bottom:30px;left:22px;width:4px;height:4px;border-radius:50%;background:#00FF95;opacity:0.6;"></div>
+              <!-- Center -->
+              <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:6px;height:6px;border-radius:50%;background:#00FF95;"></div>
+            </div>
+          </div>
+        </div>
+        <h3 class="font-headline text-xl font-bold mb-3 italic">Continuous Scans</h3>
+        <p class="text-white/50 text-sm leading-relaxed">We scan your Google Business Profile every hour. The moment a review appears, our system catches it instantly.</p>
+      </div>
+
+      <!-- Step 2: Draft -->
+      <div class="reveal" style="transition-delay:0.2s">
+        <div class="ui-card mb-6 border-emerald-thin">
+          <div class="ui-header"><div class="dot green"></div><span class="text-[9px] text-white/30 font-bold uppercase">Step 02 / Draft</span></div>
+          <div class="p-5 h-44 flex flex-col justify-center">
+            <div class="text-[9px] text-white/30 uppercase tracking-widest mb-3">Analyzing sentiment...</div>
+            <div class="space-y-2 mb-4">
+              <div class="h-1.5 w-full bg-white/8 rounded-full overflow-hidden"><div class="h-full bg-primary/50 rounded-full" style="width:85%"></div></div>
+              <div class="h-1.5 w-3/4 bg-white/8 rounded-full overflow-hidden"><div class="h-full bg-primary/50 rounded-full" style="width:70%"></div></div>
+              <div class="h-1.5 w-5/6 bg-white/8 rounded-full overflow-hidden"><div class="h-full bg-primary/50 rounded-full" style="width:90%"></div></div>
+            </div>
+            <div class="p-2.5 bg-primary/5 border border-primary/20 rounded text-[10px] text-primary/80 flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-primary typing-dot flex-shrink-0"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-primary typing-dot flex-shrink-0"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-primary typing-dot flex-shrink-0"></span>
+              <span class="ml-1">Crafting personalized response...</span>
+            </div>
+          </div>
+        </div>
+        <h3 class="font-headline text-xl font-bold mb-3 italic">Tailored Response</h3>
+        <p class="text-white/50 text-sm leading-relaxed">Our AI reads each review and writes a reply that sounds genuinely human — not a copy-paste template.</p>
+      </div>
+
+      <!-- Step 3: Posted -->
+      <div class="reveal" style="transition-delay:0.4s">
+        <div class="ui-card mb-6 border-emerald-thin">
+          <div class="ui-header"><div class="dot green"></div><span class="text-[9px] text-white/30 font-bold uppercase">Step 03 / Posted</span></div>
+          <div class="p-5 h-44 flex flex-col justify-center">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-9 h-9 rounded-full bg-primary/15 flex items-center justify-center success-ring flex-shrink-0">
+                <span class="text-primary font-bold">✓</span>
+              </div>
+              <div>
+                <div class="text-[9px] uppercase font-bold text-primary tracking-widest">Live on Google</div>
+                <div class="text-[9px] text-white/30">Response posted successfully</div>
+              </div>
+            </div>
+            <div class="bg-white/4 rounded-lg p-3 border border-white/5">
+              <p class="text-[11px] text-white/55 italic leading-relaxed">"Thank you so much, Michael! We're thrilled you had a great experience — see you next time! 😊"</p>
+            </div>
+          </div>
+        </div>
+        <h3 class="font-headline text-xl font-bold mb-3 italic">Zero Friction</h3>
+        <p class="text-white/50 text-sm leading-relaxed">Approve with one click or enable full auto-posting. Every customer gets a reply — without you lifting a finger.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="py-32 px-6" id="pricing">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-20 reveal">
+      <h2 class="font-headline text-6xl md:text-7xl font-bold kerning-tight mb-4">Investment.</h2>
+      <p class="text-white/40 uppercase tracking-[0.2em] text-xs font-bold">Simple pricing. First month free.</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <!-- Starter -->
+      <div class="reveal border-emerald-thin bg-surface p-8 flex flex-col justify-between rounded-xl">
+        <div>
+          <div class="flex justify-between items-start mb-6">
+            <h3 class="font-headline text-3xl font-bold italic">Starter</h3>
+            <div class="text-right">
+              <div class="text-3xl font-bold text-primary">$149</div>
+              <div class="text-[10px] uppercase text-white/40 tracking-widest font-bold">/ month</div>
+            </div>
+          </div>
+          <div class="inline-block bg-primary/10 border border-primary/20 text-primary text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-5">First month free</div>
+          <ul class="space-y-4 mb-8">
+            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-primary font-bold flex-shrink-0">✓</span> 1 business location</li>
+            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-primary font-bold flex-shrink-0">✓</span> Hourly review monitoring</li>
+            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-primary font-bold flex-shrink-0">✓</span> AI-written responses</li>
+            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-primary font-bold flex-shrink-0">✓</span> Owner approval before posting</li>
+            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-primary font-bold flex-shrink-0">✓</span> Hebrew & English support</li>
+            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-primary font-bold flex-shrink-0">✓</span> Monthly performance report</li>
+          </ul>
+        </div>
+        <a href="mailto:replyd.net@gmail.com" class="w-full py-3.5 border border-white/10 hover:border-primary font-bold uppercase text-xs tracking-widest transition-all text-center block rounded-xl">Get Started</a>
+      </div>
+      <!-- Growth -->
+      <div class="reveal bg-surface p-8 flex flex-col justify-between relative rounded-xl" style="border: 2px solid #00FF95; transition-delay:0.1s">
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-on-primary px-4 py-1 text-[9px] font-black uppercase tracking-widest rounded-full whitespace-nowrap">Recommended</div>
+        <div>
+          <div class="flex justify-between items-start mb-6">
+            <h3 class="font-headline text-3xl font-bold italic">Growth</h3>
+            <div class="text-right">
+              <div class="text-3xl font-bold text-primary">$249</div>
+              <div class="text-[10px] uppercase text-white/40 tracking-widest font-bold">/ month</div>
+            </div>
+          </div>
+          <div class="inline-block bg-primary/10 border border-primary/20 text-primary text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-5">First month free</div>
+          <ul class="space-y-4 mb-8">
+            <li class="flex items-center gap-3 text-sm text-white/70 font-medium"><span class="text-primary font-bold flex-shrink-0">✓</span> Everything in Starter</li>
+            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-primary font-bold flex-shrink-0">✓</span> Fully automatic posting</li>
+            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-primary font-bold flex-shrink-0">✓</span> 30-minute response time</li>
+            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-primary font-bold flex-shrink-0">✓</span> Custom tone & voice setup</li>
+            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-primary font-bold flex-shrink-0">✓</span> Hebrew & English support</li>
+            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-primary font-bold flex-shrink-0">✓</span> Priority support</li>
+          </ul>
+        </div>
+        <a href="mailto:replyd.net@gmail.com" class="w-full py-3.5 bg-primary text-on-primary font-bold uppercase text-xs tracking-widest hover:brightness-110 transition-all text-center block rounded-xl">Select Growth</a>
+      </div>
+    </div>
+    <p class="text-center mt-8 text-[10px] uppercase tracking-[0.2em] font-bold text-white/25">$99 one-time setup fee &nbsp;·&nbsp; $99/mo per additional location &nbsp;·&nbsp; Cancel anytime</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-32 px-6 text-center border-t border-emerald-thin" id="contact">
+  <div class="max-w-3xl mx-auto reveal">
+    <h2 class="font-headline text-6xl md:text-8xl font-bold mb-8 kerning-tight italic">Ready?</h2>
+    <p class="text-white/40 mb-3 text-lg">First month is completely free. Setup takes 24 hours.</p>
+    <p class="text-primary font-bold mb-10">replyd.net@gmail.com</p>
+    <a href="mailto:replyd.net@gmail.com" class="inline-block bg-primary text-on-primary px-14 py-5 rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform text-sm">Get in Touch</a>
+  </div>
+</section>
+</main>
+
+<footer class="w-full border-t border-white/5 py-8">
+  <div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto px-6 gap-4">
+    <div class="font-bold font-headline text-xl tracking-tighter">REPLYD<span class="text-primary">.</span></div>
+    <div class="text-[10px] uppercase tracking-[0.2em] font-bold text-white/25">© 2026 REPLYD. ALL RIGHTS RESERVED.</div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
